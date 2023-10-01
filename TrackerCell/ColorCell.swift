@@ -8,7 +8,7 @@
 import UIKit
 
 final class ColorCell: UICollectionViewCell {
-    static let idenrifier = "ColorCell"
+    static let identifier = "ColorCell"
     private var color: UIColor?
     
     private let colorView: UIView = {
@@ -33,16 +33,6 @@ final class ColorCell: UICollectionViewCell {
         colorView.backgroundColor = color
         self.color = color
     }
-    
-    func select() {
-        guard let color else { return }
-        contentView.layer.borderColor = color.withAlphaComponent(0.3).cgColor
-        contentView.layer.borderWidth = 3
-    }
-    
-    func deselect() {
-        contentView.layer.borderWidth = 0
-    }
 }
 
 private extension ColorCell {
@@ -59,5 +49,17 @@ private extension ColorCell {
             colorView.widthAnchor.constraint(equalToConstant: 40),
             colorView.heightAnchor.constraint(equalTo: colorView.widthAnchor)
         ])
+    }
+}
+
+extension ColorCell: SelectionCellProtocol {
+    func selected() {
+        guard let color else { return }
+        contentView.layer.borderColor = color.withAlphaComponent(0.3).cgColor
+        contentView.layer.borderWidth = 3
+    }
+    
+    func deselected() {
+        contentView.layer.borderWidth = 0
     }
 }

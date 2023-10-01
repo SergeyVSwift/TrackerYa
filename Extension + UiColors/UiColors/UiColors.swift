@@ -9,6 +9,12 @@ import UIKit
 
 extension UIColor {
     static let background = UIColor(named: "Background")!
+    static let blue = UIColor(named: "Blue")!
+    static let black = UIColor(named: "Black")!
+    static let gray = UIColor(named: "Gray")!
+    static let lightGray = UIColor(named: "LightGray")!
+    static let white = UIColor(named: "White")!
+    static let red = UIColor(named: "Red")!
     
     static let selection = [
         UIColor(named: "ColorS1")!,

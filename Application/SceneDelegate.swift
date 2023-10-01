@@ -8,28 +8,16 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
-    
-    
+
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = scene as? UIWindowScene else {
-            return
-        }
-        
-        let tabBarController = UITabBarController()
-        let trackersViewController = TrackersViewController()
-        let temporaryVC = UIViewController()
-        temporaryVC.view.backgroundColor = .systemBackground
-        let navigationController = UINavigationController(rootViewController: trackersViewController)
-        
-        navigationController.tabBarItem = UITabBarItem(title: "Трекеры", image: UIImage(named: "TrackerBar"), selectedImage: nil)
-        temporaryVC.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(named: "StatisticBar"), selectedImage: nil)
-        tabBarController.viewControllers = [navigationController, temporaryVC]
-        
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
+        guard let scene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: scene)
+        window.rootViewController = TabBarController()
+        self.window = window
+        window.makeKeyAndVisible()
     }
 }
 

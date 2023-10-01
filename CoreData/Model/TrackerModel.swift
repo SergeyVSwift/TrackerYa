@@ -1,10 +1,3 @@
-//
-//  Tracker.swift
-//  Tracker
-//
-//  Created by Сергей Ващенко on 14.08.23.
-//
-
 import UIKit
 
 struct Tracker: Identifiable {
@@ -12,13 +5,15 @@ struct Tracker: Identifiable {
     let label: String
     let emoji: String
     let color: UIColor
+    let completedDaysCount: Int
     let schedule: [Weekday]?
     
-    init(id: UUID = UUID(), label: String, emoji: String, color: UIColor, schedule: [Weekday]?) {
+    init(id: UUID = UUID(), label: String, emoji: String, color: UIColor, completedDaysCount: Int, schedule: [Weekday]?) {
         self.id = id
         self.label = label
         self.emoji = emoji
         self.color = color
+        self.completedDaysCount = completedDaysCount
         self.schedule = schedule
     }
     
@@ -27,6 +22,7 @@ struct Tracker: Identifiable {
         self.label = tracker.label
         self.emoji = tracker.emoji
         self.color = tracker.color
+        self.completedDaysCount = tracker.completedDaysCount
         self.schedule = tracker.schedule
     }
     
@@ -37,11 +33,12 @@ struct Tracker: Identifiable {
         self.label = data.label
         self.emoji = emoji
         self.color = color
+        self.completedDaysCount = data.completedDaysCount
         self.schedule = data.schedule
     }
     
     var data: Data {
-        Data(label: label, emoji: emoji, color: color, schedule: schedule)
+        Data(label: label, emoji: emoji, color: color, completedDaysCount: completedDaysCount, schedule: schedule)
     }
 }
 
@@ -50,6 +47,7 @@ extension Tracker {
         var label: String = ""
         var emoji: String? = nil
         var color: UIColor? = nil
+        var completedDaysCount: Int = 0
         var schedule: [Weekday]? = nil
     }
 }
@@ -85,44 +83,29 @@ enum Weekday: String, CaseIterable, Comparable {
     }
 }
 
-struct TrackerRecord: Hashable {
-    let trackerId: UUID
-    let date: Date
-}
-
-struct TrackerCategory {
-    let label: String
-    let trackers: [Tracker]
-    
-    init(label: String, trackers: [Tracker]) {
-        self.label = label
-        self.trackers = trackers
+extension Weekday {
+    static func code(_ weekdays: [Weekday]?) -> String? {
+        guard let weekdays else { return nil }
+        let indexes = weekdays.map { Self.allCases.firstIndex(of: $0) }
+        var result = ""
+        for i in 0..<7 {
+            if indexes.contains(i) {
+                result += "1"
+            } else {
+                result += "0"
+            }
+        }
+        return result
     }
-}
-
-extension TrackerCategory {
-    static let sampleData: [TrackerCategory] = [
-        TrackerCategory(
-            label: "Домашний уют",
-            trackers: [
-                Tracker(
-                    label: "Поливать растения",
-                    emoji: "❤️",
-                    color: UIColor(named: "ColorS5")!,
-                    schedule: [.saturday]
-                )
-            ]
-        )
-    ]
-}
-
-extension Int {
-    func days() -> String {
-        var ending: String!
-        if "1".contains("\(self % 10)")      { ending = "день" }
-        if "234".contains("\(self % 10)")    { ending = "дня"  }
-        if "567890".contains("\(self % 10)") { ending = "дней" }
-        if 11...14 ~= self % 100             { ending = "дней" }
-        return "\(self) " + ending
+    
+    static func decode(from string: String?) -> [Weekday]? {
+        guard let string else { return nil }
+        var weekdays = [Weekday]()
+        for (index, value) in string.enumerated() {
+            guard value == "1" else { continue }
+            let weekday = Self.allCases[index]
+            weekdays.append(weekday)
+        }
+        return weekdays
     }
 }
