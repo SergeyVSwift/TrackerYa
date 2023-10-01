@@ -5,6 +5,7 @@ final class TrackersViewController: UIViewController {
     private let options = UICollectionView.GeometricOptions(cellCount: 2, leftInset: 16, rightInset: 16, cellSpacing: 10)
     private var categories: [TrackerCategory] = TrackerCategory.sampleData
     private var searchText = ""
+    private var widthAnchor: NSLayoutConstraint?
     private var currentDate = Date.from(date: Date())!
     private var completedTrackers: Set<TrackerRecord> = []
     private var visibleCategories: [TrackerCategory] {
@@ -32,11 +33,8 @@ final class TrackersViewController: UIViewController {
         }
         
         if result.isEmpty {
-            notFoundStack.isHidden = false
-            filterButton.isHidden = true
-        } else {
-            notFoundStack.isHidden = true
-            filterButton.isHidden = false
+            notFoundStack.isHidden = !result.isEmpty
+            filterButton.isHidden = result.isEmpty
         }
         
         return result
@@ -57,7 +55,6 @@ final class TrackersViewController: UIViewController {
         picker.tintColor = .blue
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
-     //   picker.locale = Locale(identifier: "ru_RU")
         picker.calendar = Calendar(identifier: .iso8601)
         picker.maximumDate = Date()
         picker.addTarget(self, action: #selector(didChangedDatePicker), for: .valueChanged)
@@ -79,13 +76,14 @@ final class TrackersViewController: UIViewController {
         return button
     }()
     
-    private lazy var searchBar: UISearchBar = {
-        let view = UISearchBar()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.placeholder = "Поиск"
-        view.searchBarStyle = .minimal
-        view.delegate = self
-        return view
+    private lazy var searchBar: UISearchTextField = {
+        let searchBar = UISearchTextField()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "Поиск"
+        searchBar.returnKeyType = .done
+        searchBar.delegate = self
+        searchBar.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
+        return searchBar
     }()
     
     private let collectionView: UICollectionView = {
@@ -136,7 +134,7 @@ final class TrackersViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         button.layer.cornerRadius = 16
-        button.backgroundColor = .blue
+        button.backgroundColor = UIColor(named: "Blue")
         return button
     }()
     
@@ -150,6 +148,12 @@ final class TrackersViewController: UIViewController {
     
     // MARK: - Actions
     @objc
+    private func cancelButtonTapped() {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+    
+    @objc
     private func didTapPlusButton() {
         let addTrackerViewController = AddTrackerViewController()
         addTrackerViewController.delegate = self
@@ -161,6 +165,16 @@ final class TrackersViewController: UIViewController {
     private func didChangedDatePicker(_ sender: UIDatePicker) {
         currentDate = Date.from(date: sender.date)!
         collectionView.reloadData()
+    }
+    
+    @objc private func searchTextChanged() {
+        reloadVisibleCategories()
+    }
+    
+    private func reloadVisibleCategories() {
+        let calendar = Calendar.current
+        let filterWeekDay = calendar.component(.weekday, from: currentDate)
+        let filterText = (searchBar.text ?? "").lowercased()
     }
 }
 
@@ -185,7 +199,7 @@ private extension TrackersViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-           
+            
             plusButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 13),
             plusButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
           
@@ -263,7 +277,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int) -> CGFloat
     {
-        0
+        .zero
     }
     
     func collectionView(
@@ -307,25 +321,17 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension TrackersViewController: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.setShowsCancelButton(true, animated: true)
-        return true
-    }
+extension TrackersViewController: UITextFieldDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchText = searchText
-        collectionView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.endEditing(true)
-        searchBar.setShowsCancelButton(false, animated: true)
-        self.searchText = ""
-        collectionView.reloadData()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        reloadVisibleCategories()
+        
+        return true 
     }
 }
+
 
 // MARK: - TrackerCellDelegate
 extension TrackersViewController: TrackerCellDelegate {

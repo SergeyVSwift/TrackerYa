@@ -85,11 +85,13 @@ final class TrackerFormViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let button = Button.danger(title: "Отменить")
         button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return button
     }()
     private lazy var confirmButton: UIButton = {
         let button = Button(title: "Создать")
         button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.isEnabled = false
         return button
     }()
