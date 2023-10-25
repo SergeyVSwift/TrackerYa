@@ -16,6 +16,9 @@ final class TrackersViewController: UIViewController {
     private let trackerStore = TrackerStore()
     private let trackerCategoryStore = TrackerCategoryStore()
     private let trackerRecordStore = TrackerRecordStore()
+    private var visibleCategories: [TrackerCategory] = []
+    private var widthAnchor: NSLayoutConstraint?
+    private var demand: String = ""
     
     private var categories = [TrackerCategory]()
     private var searchText = "" {
@@ -64,13 +67,12 @@ final class TrackersViewController: UIViewController {
         return button
     }()
     
-    private lazy var searchBar: UISearchTextField = {
-        let searchBar = UISearchTextField()
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Поиск"
         searchBar.returnKeyType = .done
         searchBar.delegate = self
-        searchBar.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
         return searchBar
     }()
     
@@ -136,9 +138,10 @@ final class TrackersViewController: UIViewController {
         
         trackerRecordStore.delegate = self
         trackerStore.delegate = self
-        
+        searchBar.delegate = self
+        /*
         try? trackerStore.loadFilteredTrackers(date: currentDate, searchString: searchText)
-        try? trackerRecordStore.loadCompletedTrackers(by: currentDate)
+        try? trackerRecordStore.loadCompletedTrackers(by: currentDate)*/
         
         checkNumberOfTrackers()
     }
@@ -161,10 +164,6 @@ final class TrackersViewController: UIViewController {
             try trackerRecordStore.loadCompletedTrackers(by: currentDate)
         } catch {}
         collectionView.reloadData()
-    }
-    
-    @objc private func searchTextChanged() {
-        reloadVisibleCategories()
     }
     
     // MARK: - Func
@@ -334,14 +333,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-    }
-}
-
-extension TrackersViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        reloadVisibleCategories()
-        return true
     }
 }
 
