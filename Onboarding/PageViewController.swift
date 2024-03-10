@@ -1,45 +1,5 @@
 import UIKit
 
-<<<<<<< HEAD
-=======
-enum ColorPageType: CaseIterable {
-    case blue
-    case red
- 
-    var viewController: UIViewController {
-        switch self {
-        case .blue:
-            return OnboardingViewController(colorPage: self.colorPage)
-        case .red:
-            return OnboardingViewController(colorPage: self.colorPage)
-        }
-    }
-
-    private var colorPage: ColorPage {
-        ColorPage(backgroundImageName: self.imageName, onboardingInfoText: self.infoText)
-    }
-    
-    private var imageName: String {
-        switch self {
-        case .blue:
-            return "OnboardingBlue"
-        case .red:
-            return "OnboardingRed"
-        }
-    }
-    
-    private var infoText: String {
-        switch self {
-        case .blue:
-            return "Отслеживайте только то, что хотите"
-        case .red:
-            return "Даже если это не литры воды и йога"
-        }
-    }
-}
-
-
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 final class PageViewController: UIPageViewController {
     
     // MARK: - private properties

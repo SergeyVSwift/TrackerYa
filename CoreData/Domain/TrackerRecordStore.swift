@@ -60,15 +60,7 @@ final class TrackerRecordStore: NSObject {
         guard let objects = try? context.fetch(fetchedRequest) else { return false }
         
         objects.forEach { trcd in
-<<<<<<< HEAD
             completed = trcd.tracker == trackerCoreData
-=======
-            if trcd.tracker == trackerCoreData {
-                completed = true
-            } else {
-                completed = false
-            }
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
         }
         return completed
     }
