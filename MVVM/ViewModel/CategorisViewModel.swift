@@ -24,25 +24,31 @@ final class CategoriesViewModel {
         self.selectedCategory = selectedCategory
         self.categoryStore = categoryStore
     }
-    
-    deinit{
-        print("CategoriesViewModel deinit")
-    }
 }
 
 // MARK: CategoriesViewModelProtocol
 extension CategoriesViewModel: CategoriesViewModelProtocol {
     var numberOfRows: Int {
-        categoryStore.fetchedResultsController.sections?[0].numberOfObjects ?? 0
+        guard let numberOfRows = categoryStore.fetchedResultsController.sections?[0].numberOfObjects else { return 0 }
+        return numberOfRows - 1
     }
     
     func didSelectCategory(by indexPath: IndexPath) -> TrackerCategoryCoreData? {
-        categoryStore.getTrackerCategoryCoreData(by: indexPath)
+        var indexPath = indexPath
+        if indexPath.row >= 0 {
+            indexPath.row += 1
+        }
+        return categoryStore.getTrackerCategoryCoreData(by: indexPath)
     }
     
     func categoryCellViewModel(at indexPath: IndexPath) -> CategoryCellViewModel? {
+        var indexPath = indexPath
+        if indexPath.row >= 0 {
+            indexPath.row += 1
+        }
+        
         guard let category = categoryStore.getTrackerCategory(by: indexPath) else { return nil }
-        let isSelected = selectedCategory == category.title ? true : false
+        let isSelected = selectedCategory == category.title
         return CategoryCellViewModel(category: category, isSelect: isSelected)
     }
     
@@ -57,7 +63,8 @@ extension CategoriesViewModel: CategoriesViewModelProtocol {
     }
     
     func needToHidePlugView() {
-        let needToHidePlugView = categoryStore.fetchedResultsController.sections?[0].numberOfObjects != 0
+        let checkedValue = categoryStore.fetchedResultsController.sections?[0].numberOfObjects
+        let needToHidePlugView = checkedValue != 0 && checkedValue != 1
         needToHidePlugView ? hidePlugView?(true) : hidePlugView?(false)
     }
 }

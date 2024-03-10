@@ -29,7 +29,6 @@ final class CategoriesViewController: UIViewController {
     
     //MARK: - initialization
     init(viewModel: CategoriesViewControllerViewModelProtocol, delegate: CategoriesViewControllerDelegate) {
-        self.delegate = delegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,10 +56,6 @@ final class CategoriesViewController: UIViewController {
         view.backgroundColor = .clear
         title = CategoryViewControllerConstants.title
         addScreenView(view: сategoriesView)
-    }
-    
-    deinit {
-        print("CategoryViewController deinit")
     }
 }
 

@@ -15,11 +15,8 @@ protocol CategoriesViewDelegate: AnyObject {
 final class CategoriesView: UIView {
     
     weak var delegate: CategoriesViewDelegate?
-<<<<<<< HEAD
+    //private var viewModel: CategoriesViewModelProtocol?
     private var viewModel: CategoriesViewModelProtocol
-=======
-    private var viewModel: CategoriesViewModelProtocol?
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
     
     private struct CategoryViewConstant {
         static let collectionViewReuseIdentifier = "Cell"
@@ -102,11 +99,7 @@ final class CategoriesView: UIView {
     
     // MARK: - Public properties
     func reloadCollectionView() {
-<<<<<<< HEAD
         viewModel.updateCategories()
-=======
-        viewModel?.updateCategories()
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
     }
     
     // MARK: - Private properties
@@ -145,19 +138,11 @@ final class CategoriesView: UIView {
     }
     
     private func bind() {
-<<<<<<< HEAD
         viewModel.hidePlugView = { [weak self] in
             guard let self = self else { return }
             self.plugView.isHidden = $0
         }
         viewModel.needToUpdateCollectionView = { [weak self] in
-=======
-        viewModel?.hidePlugView = { [weak self] in
-            guard let self = self else { return }
-            self.plugView.isHidden = $0
-        }
-        viewModel?.needToUpdateCollectionView = { [weak self] in
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
             guard let self = self, $0 else { return }
             self.categoryCollectionView.reloadData()
         }
@@ -167,11 +152,7 @@ final class CategoriesView: UIView {
         return UIContextMenuConfiguration(actionProvider: { [weak self] actions in
             guard
                 let self,
-<<<<<<< HEAD
                 let selectedCategory = self.viewModel.didSelectCategory(by: indexPath)
-=======
-                let selectedCategory = self.viewModel?.didSelectCategory(by: indexPath)
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
             else { return UIMenu() }
             
             return UIMenu(children: [
@@ -183,11 +164,7 @@ final class CategoriesView: UIView {
                     )
                 },
                 UIAction(title: "Удалить", attributes: .destructive, handler: { _ in
-<<<<<<< HEAD
                     guard let cell = self.viewModel.categoryCellViewModel(at: indexPath) else { return }
-=======
-                    guard let cell = self.viewModel?.categoryCellViewModel(at: indexPath) else { return }
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
                     cell.selectedCategory ? self.delegate?.showErrorAlert() : self.delegate?.showDeleteActionSheet(deleteCategory: selectedCategory)
                 })
             ])
@@ -197,11 +174,8 @@ final class CategoriesView: UIView {
     private func setCellCornerRadius(cell: CategoryCollectionViewCell, numberRow: Int) {
         cell.layer.masksToBounds = true
         
-<<<<<<< HEAD
-=======
-        guard let viewModel else { return }
+      // guard let viewModel else { return }
         
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
         switch viewModel.numberOfRows {
         case 1:
             cell.layer.cornerRadius = Constants.cornerRadius
@@ -231,11 +205,7 @@ final class CategoriesView: UIView {
 // MARK: UICollectionViewDataSource
 extension CategoriesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-<<<<<<< HEAD
         viewModel.numberOfRows ?? 0
-=======
-        viewModel?.numberOfRows ?? 0
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
     }
     
     func collectionView(
@@ -246,11 +216,7 @@ extension CategoriesView: UICollectionViewDataSource {
             withReuseIdentifier: CategoryCollectionViewCell.cellReuseIdentifier,
             for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell() }
         
-<<<<<<< HEAD
         let categoryCellViewModel = viewModel.categoryCellViewModel(at: indexPath)
-=======
-        let categoryCellViewModel = viewModel?.categoryCellViewModel(at: indexPath)
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
         setCellCornerRadius(cell: cell, numberRow: indexPath.row)
         cell.initialize(viewModel: categoryCellViewModel)
         return cell
@@ -260,11 +226,7 @@ extension CategoriesView: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate
 extension CategoriesView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-<<<<<<< HEAD
         let categoryCoreData = viewModel.didSelectCategory(by: indexPath)
-=======
-        let categoryCoreData = viewModel?.didSelectCategory(by: indexPath)
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
         delegate?.selectedCategory(categoryCoreData: categoryCoreData)
     }
     
