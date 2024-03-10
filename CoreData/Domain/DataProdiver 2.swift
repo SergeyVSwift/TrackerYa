@@ -67,19 +67,11 @@ final class DataProvider: NSObject {
 extension DataProvider: DataProviderProtocol {
     var isTrackersForSelectedDate: Bool {
         guard let objects = fetchedResultsController.fetchedObjects else { return false }
-<<<<<<< HEAD
         return !objects.isEmpty
     }
     
     var numberOfSections: Int {
         fetchedResultsController.sections?.count ?? 0
-=======
-        return objects.isEmpty ? false : true
-    }
-    
-    var numberOfSections: Int {
-        return fetchedResultsController.sections?.count ?? 0
->>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {

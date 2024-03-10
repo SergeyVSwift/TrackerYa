@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
 		C500BFCD2B9E31A0001E2F7C /* ColorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500BFCC2B9E31A0001E2F7C /* ColorPage.swift */; };
 		C500BFCF2B9E31B2001E2F7C /* ColorPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500BFCE2B9E31B2001E2F7C /* ColorPageType.swift */; };
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 		C512C83E2AC04A8000B67195 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512C83D2AC04A8000B67195 /* AppDelegate.swift */; };
 		C512C8402AC04A8000B67195 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C512C83F2AC04A8000B67195 /* SceneDelegate.swift */; };
 		C512C8452AC04A8000B67195 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C512C8432AC04A8000B67195 /* Main.storyboard */; };
@@ -71,8 +74,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		C500BFCC2B9E31A0001E2F7C /* ColorPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPage.swift; sourceTree = "<group>"; };
 		C500BFCE2B9E31B2001E2F7C /* ColorPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPageType.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 		C512C83A2AC04A8000B67195 /* TrackerYandex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackerYandex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C512C83D2AC04A8000B67195 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C512C83F2AC04A8000B67195 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +153,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
 		C500BFCB2B9E3197001E2F7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +163,8 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 		C512C8312AC04A8000B67195 = {
 			isa = PBXGroup;
 			children = (
@@ -163,9 +172,12 @@
 				C5F4314C2B1409C900A7A53E /* MVVM */,
 				C5F4314A2B0D439F00A7A53E /* Main */,
 				C5CA4CAB2ACC64E800FC901A /* CoreData */,
+<<<<<<< HEAD
 				C512C83D2AC04A8000B67195 /* AppDelegate.swift */,
 				C512C83F2AC04A8000B67195 /* SceneDelegate.swift */,
 				C512C8482AC04A8100B67195 /* LaunchScreen.storyboard */,
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 				C512C83C2AC04A8000B67195 /* Application */,
 				C512C83B2AC04A8000B67195 /* Products */,
 			);
@@ -272,7 +284,10 @@
 			children = (
 				C5F431522B15FF7700A7A53E /* OnboardingViewController.swift */,
 				C5F431502B15FF5F00A7A53E /* PageViewController.swift */,
+<<<<<<< HEAD
 				C500BFCB2B9E3197001E2F7C /* Model */,
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 				C5F431542B15FFC300A7A53E /* Helper */,
 			);
 			path = Onboarding;
@@ -559,7 +574,10 @@
 				C5F4318F2B17DF2C00A7A53E /* ScheduleView.swift in Sources */,
 				C5F4317D2B17DDB400A7A53E /* ColorAndEmojiCollectionViewHelper.swift in Sources */,
 				C5F431642B16054D00A7A53E /* CategorisViewModel.swift in Sources */,
+<<<<<<< HEAD
 				C500BFCF2B9E31B2001E2F7C /* ColorPageType.swift in Sources */,
+=======
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 				C5CA4CAF2ACC650200FC901A /* TrackerCategoryStore.swift in Sources */,
 				C5F431532B15FF7700A7A53E /* OnboardingViewController.swift in Sources */,
 				C5F431662B16056C00A7A53E /* CategoriesViewControllerModel.swift in Sources */,

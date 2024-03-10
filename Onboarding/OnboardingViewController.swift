@@ -1,5 +1,13 @@
 import UIKit
 
+<<<<<<< HEAD
+=======
+struct ColorPage {
+    let backgroundImageName: String
+    let onboardingInfoText: String
+}
+
+>>>>>>> 5d7a33b1fa47a4e012bc80505ef1b61cb7a52cd8
 final class OnboardingViewController: UIViewController {
     
     //MARK: - private properties
