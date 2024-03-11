@@ -23,6 +23,7 @@ final class EditCategoryViewController: UIViewController {
             delegate: self
         )
         setupView()
+        configureKeyboard()
     }
     
     private func setupView() {
@@ -54,6 +55,10 @@ final class EditCategoryViewController: UIViewController {
     
     private func editCategory(newTitle: String, at indexPath: IndexPath)  {
         categoryStory.changeCategory(at: indexPath, newCategoryTitle: newTitle)
+    }
+    
+    private func configureKeyboard() {
+        hideKeyboardWhenTappedAround()
     }
 }
 

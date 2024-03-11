@@ -44,6 +44,8 @@ final class CreateTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureKeyboard()
+        
         guard let typeTracker else {
             dismiss(animated: true)
             return
@@ -73,7 +75,12 @@ final class CreateTrackerViewController: UIViewController {
     deinit {
         print("CreateTrackerViewController deinit")
     }
+    
+    private func configureKeyboard() {
+        hideKeyboardWhenTappedAround()
+    }
 }
+
 
 // MARK: CreateTrackerViewDelegate
 extension CreateTrackerViewController: CreateTrackerViewDelegate {
@@ -130,7 +137,8 @@ extension CreateTrackerViewController {
             viewController = sheduleViewController
         case .category:
             let viewModel = CategoriesViewControllerViewModel()
-            let categoryViewController = CategoriesViewController(viewModel: viewModel, delegate: self)
+            let categoryViewController = CategoriesViewController(viewModel: viewModel)
+            categoryViewController.delegate = self
             viewController = categoryViewController
             
             if let selectedCategory {
@@ -160,4 +168,3 @@ extension CreateTrackerViewController: SheduleViewControllerDelegate {
         dismiss(animated: true)
     }
 }
-
