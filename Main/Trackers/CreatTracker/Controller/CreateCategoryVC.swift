@@ -1,170 +1,107 @@
 import UIKit
 
-protocol CreateTrackerViewControllerDelegate: AnyObject {
-    func dismissViewController(_ viewController: UIViewController)
+protocol CreateCategoryVCDelegate {
+    func createdCategory(_ category: TrackerCategoryModel)
 }
 
-final class CreateTrackerViewController: UIViewController {
+class CreateCategoryVC: UIViewController, UITextFieldDelegate {
+    var delegate: CreateCategoryVCDelegate?
     
-    // MARK: public properties
-    var typeTracker: TypeTracker?
-    weak var delegate: CreateTrackerViewControllerDelegate?
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "Новая категория"
+        label.font = .systemFont(ofSize: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-   // MARK: helpers
-    private enum SheduleCategory {
-        case shedule
-        case category
-    }
+    private lazy var textField: UITextField = {
+        let textField = UITextField()
+        textField.indent(size: 10)
+        textField.placeholder = "Введите название категории"
+        textField.textColor = .ypBlack
+        textField.backgroundColor = .bgColor
+        textField.layer.cornerRadius = 16
+        textField.font = .systemFont(ofSize: 17)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        UITextField.appearance().clearButtonMode = .whileEditing
+        textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        return textField
+    }()
     
-    private struct CreateTrackerViewControllerConstants {
-        static let habitTitle = "Новая привычка"
-        static let eventTitle = "Новое нерегулярное событие"
-        static let weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    }
+    private lazy var addCategoryButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Готово", for: .normal)
+        button.titleLabel?.textColor = .white
+        button.backgroundColor = .gray
+        button.isEnabled = true
+        button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(addCategoryButtonAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
-    // MARK: private properties
-    private var selectedCategory: TrackerCategoryCoreData?
-    private var selectedDates: [String]?
+    private let trackerCategoryStore = TrackerCategoryStore()
     
-    private var stringSelectedDates: String {
-        if selectedDates?.count == 7 {
-            return "Каждый день"
+    @objc func textFieldChanged() {
+        if textField.text != "" {
+            addCategoryButton.backgroundColor = .black
+            addCategoryButton.isEnabled = true
         } else {
-            return selectedDates?.joined(separator: ", ") ?? ""
+            addCategoryButton.backgroundColor = .gray
+            addCategoryButton.isEnabled = false
         }
     }
     
-    private var tracker: Tracker?
-    private let dataProvider = DataProvider()
+    @objc func addCategoryButtonAction() {
+        if let categoryName = textField.text {
+            let category = TrackerCategoryModel(title: categoryName, trackers: [])
+            try? trackerCategoryStore.addNewTrackerCategory(category)
+            delegate?.createdCategory(category)
+            dismiss(animated: true)
+        }
+    }
     
-    // MARK: UI
-    private var createTrackerView: CreateTrackerView!
-    
-    // MARK: - override
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureKeyboard()
-        
-        guard let typeTracker else {
-            dismiss(animated: true)
-            return
-        }
-        
-        createTrackerView = CreateTrackerView(
-            frame: view.bounds,
-            delegate: self,
-            typeTracker: typeTracker
-        )
-        
-        switch typeTracker {
-        case .habit:
-            setupView(with: CreateTrackerViewControllerConstants.habitTitle)
-        case .event:
-            setupView(with: CreateTrackerViewControllerConstants.eventTitle)
-        }
+        view.backgroundColor = .white
+        addSubviews()
+        setupLayout()
+        self.textField.delegate = self
     }
     
-    // MARK: private methods
-    private func setupView(with title: String) {
-        view.backgroundColor = .clear
-        self.title = title
-        addScreenView(view: createTrackerView)
+    private func addSubviews() {
+        view.addSubview(titleLabel)
+        view.addSubview(textField)
+        view.addSubview(addCategoryButton)
     }
     
-    deinit {
-        print("CreateTrackerViewController deinit")
-    }
-    
-    private func configureKeyboard() {
-        hideKeyboardWhenTappedAround()
-    }
-}
-
-
-// MARK: CreateTrackerViewDelegate
-extension CreateTrackerViewController: CreateTrackerViewDelegate {
-    func sendTrackerSetup(nameTracker: String?, color: UIColor, emoji: String) {
-        if typeTracker == .event {
-            selectedDates = CreateTrackerViewControllerConstants.weekDays
-        }
-    
-        guard
-            let nameTracker,
-            selectedDates != nil
-        else { return }
-    
-        tracker = Tracker(
-            id: UUID().uuidString,
-            name: nameTracker,
-            color: color,
-            emoji: emoji,
-            schedule: selectedDates
-        )
-                
-        guard let tracker = tracker,
-              let selectedCategory
-        else { return }
-        
-        try? dataProvider.saveTracker(tracker, in: selectedCategory)
-        delegate?.dismissViewController(self)
-    }
-    
-    func showSchedule() {
-        let viewController = createViewController(type: .shedule)
-        present(viewController, animated: true)
-    }
-    
-    func showCategory() {
-        let viewController = createViewController(type: .category)
-        present(viewController, animated: true)
-    }
-
-    func cancelCreate() {
-        delegate?.dismissViewController(self)
-    }
-}
-
-// MARK: create CategoryViewController
-extension CreateTrackerViewController {
-    private func createViewController(type: SheduleCategory) -> UINavigationController {
-        let viewController: UIViewController
-        
-        switch type {
-        case .shedule:
-            let sheduleViewController = SheduleViewController()
-            sheduleViewController.delegate = self
-            viewController = sheduleViewController
-        case .category:
-            let viewModel = CategoriesViewControllerViewModel()
-            let categoryViewController = CategoriesViewController(viewModel: viewModel)
-            categoryViewController.delegate = self
-            viewController = categoryViewController
+    private func setupLayout() {
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
             
-            if let selectedCategory {
-                categoryViewController.selectedCategoryTitle = selectedCategory.title
-            }
-        }
-        
-        let navigationViewController = UINavigationController(rootViewController: viewController)
-        return navigationViewController
+            textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textField.heightAnchor.constraint(equalToConstant: 75),
+            
+            
+            addCategoryButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            addCategoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            addCategoryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addCategoryButton.heightAnchor.constraint(equalToConstant: 60),
+       ])
+    }
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 
-// MARK: CategoriesViewControllerDelegate
-extension CreateTrackerViewController: CategoriesViewControllerDelegate {
-    func setCategory(categoryCoreData: TrackerCategoryCoreData?) {
-        self.selectedCategory = categoryCoreData
-        createTrackerView.setCategory(with: categoryCoreData?.title)
-        dismiss(animated: true)
-    }
-}
 
-// MARK: SheduleViewControllerDelegate
-extension CreateTrackerViewController: SheduleViewControllerDelegate {
-    func setSelectedDates(dates: [String]) {
-        selectedDates = dates
-        createTrackerView.setShedule(with: stringSelectedDates)
-        dismiss(animated: true)
-    }
-}

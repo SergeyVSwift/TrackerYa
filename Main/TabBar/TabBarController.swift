@@ -7,64 +7,27 @@
 
 import UIKit
 
-final class TabBarController: UITabBarController {
-    
-    private enum TabBarItem {
-        case tracker
-        case statistic
-        
-        var title: String {
-            switch self {
-            case .tracker:
-                return "Трекеры"
-            case .statistic:
-                return "Статистика"
-            }
-        }
-        
-        var image: UIImage? {
-            switch self {
-            case .tracker:
-                return UIImage(named: "record.circle")
-            case .statistic:
-                return UIImage(named: "hare")
-            }
-        }
-    }
+class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        generateTabBar()
     }
     
-    func setupTabBar() {
-        let tabBarItems: [TabBarItem] = [.tracker, .statistic]
-        tabBar.tintColor = .ypBlue
-        tabBar.unselectedItemTintColor = .ypGray
-        
-        viewControllers = tabBarItems.compactMap({ item in
-            switch item {
-            case .tracker:
-                let viewController = TrackersViewController()
-                return creatNavigationController(vc: viewController, title: item.title)
-            case .statistic:
-                let viewController = StatisticViewController()
-                return creatNavigationController(vc: viewController, title: item.title)
-            }
-        })
-        
-        viewControllers?.enumerated().forEach({ (index, vc) in
-            vc.tabBarItem.title = tabBarItems[index].title
-            vc.tabBarItem.image = tabBarItems[index].image
-        })
+    private func generateTabBar() {
+        tabBar.layer.borderWidth = 0.3
+        tabBar.layer.borderColor = UIColor(red:0.0/255.0, green:0.0/255.0, blue:0.0/255.0, alpha:0.2).cgColor
+        tabBar.clipsToBounds = true
     }
     
-    private func creatNavigationController(vc: UIViewController, title: String) -> UINavigationController {
-        vc.title = title
-        let navVC = UINavigationController(rootViewController: vc)
-        navVC.navigationItem.largeTitleDisplayMode = .always
-        navVC.navigationBar.prefersLargeTitles = true
-        return navVC
+    class func configure() -> UIViewController {
+        let trackersViewController = UINavigationController(rootViewController: CreateTrackerViewController())
+        trackersViewController.tabBarItem.image = UIImage(named: "record.circle")
+        let statisticsViewController = UINavigationController(rootViewController: StatisticViewController())
+        statisticsViewController.tabBarItem.image = UIImage(named: "hare")
+        statisticsViewController.title = "Статистика"
+        let tabBarController = TabBarController()
+        tabBarController.viewControllers = [trackersViewController, statisticsViewController]
+       return tabBarController
     }
 }
-    

@@ -7,15 +7,8 @@
 
 import UIKit
 
-final class Colors {
-    var viewBackgroundColor = UIColor.systemBackground
-    var datePickerTintColor = UIColor { (traits) -> UIColor in
-        let isDarkMode = traits.userInterfaceStyle == .dark
-        return isDarkMode ? UIColor.black : UIColor.black
-    }
-}
-
 extension UIColor {
+        
     static let backgroundColor = UIColor(named: "YPBackground") ?? UIColor.red
     static let switchColor = UIColor(named: "switchColor") ?? UIColor.blue
     static var bgColor: UIColor { UIColor(named: "YPBackground") ?? UIColor.red }

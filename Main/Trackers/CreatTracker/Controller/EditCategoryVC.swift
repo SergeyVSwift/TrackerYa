@@ -1,14 +1,14 @@
 import UIKit
 
 class EditCategoryVC: UIViewController {
-    private let colors = Colors()
-    var editableCategory: TrackerCategory?
+    
+    var editableCategory: TrackerCategoryModel?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .black
         label.text = "Редактирование категории"
-        label.font = UIFont.mediumSystemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -16,7 +16,7 @@ class EditCategoryVC: UIViewController {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.textColor = .ypBlack
-        textField.backgroundColor = .backgroundColor
+        textField.backgroundColor = .bgColor
         textField.layer.cornerRadius = 16
         textField.font = .systemFont(ofSize: 17)
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +30,7 @@ class EditCategoryVC: UIViewController {
     private lazy var editCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.setTitleColor(.ypWhite, for: .normal)
+        button.titleLabel?.textColor = .white
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16
@@ -43,14 +43,13 @@ class EditCategoryVC: UIViewController {
     
     @objc func textFieldChanged() {
         if textField.text != "" {
-            editCategoryButton.backgroundColor = .ypBlack
+            editCategoryButton.backgroundColor = .black
             editCategoryButton.isEnabled = true
         } else {
             editCategoryButton.backgroundColor = .gray
             editCategoryButton.isEnabled = false
         }
     }
-    
     
     @objc func editCategoryButtonAction() {
         guard let editableCategory = editableCategory else { return }
@@ -62,7 +61,7 @@ class EditCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .white
         textField.becomeFirstResponder()
         addSubviews()
         setupLayout()
@@ -92,3 +91,4 @@ class EditCategoryVC: UIViewController {
         ])
     }
 }
+

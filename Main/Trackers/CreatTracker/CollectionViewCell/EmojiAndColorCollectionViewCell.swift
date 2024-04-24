@@ -1,6 +1,6 @@
 import UIKit
 
-final class EmojiAndColorCollectionViewCCell: UICollectionViewCell {
+final class EmojiAndColorCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "emojiAndColorCollectionViewCell"
     
@@ -43,3 +43,4 @@ final class EmojiAndColorCollectionViewCCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

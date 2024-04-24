@@ -1,14 +1,13 @@
 import UIKit
 
-class CategorisView: UIViewController {
+class CategoryListView: UIViewController {
     private let viewModel: CategoryViewModel
-    private let colors = Colors()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .black
         label.text = "Категория"
-        label.font = UIFont.mediumSystemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -16,17 +15,17 @@ class CategorisView: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "star")
+        imageView.image = UIImage(named: "Star")
         return imageView
     }()
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .black
         label.text = "Привычки и события можно объединять по смыслу"
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.font = UIFont.mediumSystemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,7 +33,7 @@ class CategorisView: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Добавить категорию", for: .normal)
-        button.setTitleColor(.ypWhite, for: .normal)
+        button.titleLabel?.textColor = .white
         button.backgroundColor = .ypBlack
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(addCategoryButtonAction), for: .touchUpInside)
@@ -44,9 +43,9 @@ class CategorisView: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.cellReuseIdentifier)
+        tableView.register(CategoryCollectionViewCell.self, forCellReuseIdentifier: CategoryCollectionViewCell.identifier)
         tableView.separatorColor = .ypGray
-        tableView.backgroundColor = .ypWhite
+        tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
@@ -54,11 +53,11 @@ class CategorisView: UIViewController {
         return tableView
     }()
     
-    init(delegate: CategoryListViewModelDelegate?, selectedCategory: TrackerCategory?) {
-        viewModel = CategoryViewModel(delegate: delegate, selectedCategory: selectedCategory)
-        super.init(nibName: nil, bundle: nil)
-        viewModel.onChange = self.tableView.reloadData
-    }
+    init(viewModel: CategoryViewModel) {
+           self.viewModel = viewModel
+           super.init(nibName: nil, bundle: nil)
+           viewModel.onChange = self.tableView.reloadData
+       }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -66,7 +65,7 @@ class CategorisView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .white
         addSubviews()
         setupLayout()
     }
@@ -113,7 +112,7 @@ class CategorisView: UIViewController {
         present(createCategoryVC, animated: true)
     }
     
-    private func actionSheet(categoryToDelete: TrackerCategory) {
+    private func actionSheet(categoryToDelete: TrackerCategoryModel) {
         let alert = UIAlertController(title: "Эта категория точно не нужна?",
                                       message: nil,
                                       preferredStyle: .actionSheet)
@@ -151,7 +150,7 @@ class CategorisView: UIViewController {
     }
 }
 
-extension CategorisView: UITableViewDataSource {
+extension CategoryListView: UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
@@ -169,12 +168,12 @@ extension CategorisView: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.cellReuseIdentifier) as? CategoryTableViewCell else {
+        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCollectionViewCell.identifier) as? CategoryCollectionViewCell else {
             return UITableViewCell()
         }
         
         let categoryName = viewModel.categories[indexPath.row].title
-        categoryCell.categoryLabel.text = categoryName
+        categoryCell.label.text = categoryName
         if indexPath.row == viewModel.categories.count - 1 {
             categoryCell.separatorInset = UIEdgeInsets(top: 0, left: categoryCell.bounds.size.width + 200, bottom: 0, right: 0);
             categoryCell.contentView.clipsToBounds = true
@@ -198,31 +197,31 @@ extension CategorisView: UITableViewDataSource {
     }
 }
 
-extension CategorisView: UITableViewDelegate {
+extension CategoryListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let categoryCell = tableView.cellForRow(at: indexPath) as? CategoryTableViewCell else {
+        guard let categoryCell = tableView.cellForRow(at: indexPath) as? CategoryCollectionViewCell else {
             return
         }
-        guard let selectedCategoryName = categoryCell.categoryLabel.text else { return }
+        guard let selectedCategoryName = categoryCell.label.text else { return }
         categoryCell.checkmarkImage.isHidden = !categoryCell.checkmarkImage.isHidden
         viewModel.selectCategory(with: selectedCategoryName)
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let categoryCell = tableView.cellForRow(at: indexPath) as? CategoryTableViewCell else {
+        guard let categoryCell = tableView.cellForRow(at: indexPath) as? CategoryCollectionViewCell else {
             return
         }
         categoryCell.checkmarkImage.isHidden = true
     }
 }
 
-extension CategorisView: CreateCategoryVCDelegate {
-    func createdCategory(_ category: TrackerCategory) {
+extension CategoryListView: CreateCategoryVCDelegate {
+    func createdCategory(_ category: TrackerCategoryModel) {
         viewModel.selectCategory(category)
         viewModel.selectCategory(with: category.title)
     }

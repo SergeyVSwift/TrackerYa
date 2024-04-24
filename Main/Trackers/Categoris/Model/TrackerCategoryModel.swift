@@ -1,7 +1,7 @@
 import UIKit
 
 struct TrackerCategoryModel {
-    let name: String
+    let title: String
     let trackers: [Tracker]
     
     func visibleTrackers(filterString: String) -> [Tracker] {

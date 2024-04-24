@@ -1,24 +1,24 @@
 import Foundation
 
 protocol CategoryListViewModelDelegate: AnyObject {
-    func createCategory(category: TrackerCategory)
+    func createCategory(category: TrackerCategoryModel)
 }
 
 final class CategoryViewModel: NSObject {
     
     var onChange: (() -> Void)?
     
-    private(set) var categories: [TrackerCategory] = [] {
+    private(set) var categories: [TrackerCategoryModel] = [] {
         didSet {
             onChange?()
         }
     }
 
     private let trackerCategoryStore = TrackerCategoryStore()
-    private(set) var selectedCategory: TrackerCategory?
+    private(set) var selectedCategory: TrackerCategoryModel?
     private weak var delegate: CategoryListViewModelDelegate?
 
-    init(delegate: CategoryListViewModelDelegate?, selectedCategory: TrackerCategory?) {
+    init(delegate: CategoryListViewModelDelegate?, selectedCategory: TrackerCategoryModel?) {
         self.selectedCategory = selectedCategory
         self.delegate = delegate
         super.init()
@@ -26,16 +26,16 @@ final class CategoryViewModel: NSObject {
         categories = trackerCategoryStore.trackerCategories
     }
     
-    func deleteCategory(_ category: TrackerCategory) {
+    func deleteCategory(_ category: TrackerCategoryModel) {
         try? self.trackerCategoryStore.deleteCategory(category)
     }
     
     func selectCategory(with name: String) {
-        let category = TrackerCategory(title: name, trackers: [])
+        let category = TrackerCategoryModel(title: name, trackers: [])
         delegate?.createCategory(category: category)
     }
     
-    func selectCategory(_ category: TrackerCategory) {
+    func selectCategory(_ category: TrackerCategoryModel) {
         selectedCategory = category
         onChange?()
     }
@@ -46,3 +46,4 @@ extension CategoryViewModel: TrackerCategoryStoreDelegate {
         categories = trackerCategoryStore.trackerCategories
     }
 }
+
