@@ -6,7 +6,7 @@ final class CategoryCollectionViewCell: UITableViewCell {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .ypBlack
         label.font = .systemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -14,7 +14,7 @@ final class CategoryCollectionViewCell: UITableViewCell {
     
     lazy var view: UIView = {
        let view = UIView()
-        view.backgroundColor = .bgColor
+        view.backgroundColor = .backgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
        return view
     }()

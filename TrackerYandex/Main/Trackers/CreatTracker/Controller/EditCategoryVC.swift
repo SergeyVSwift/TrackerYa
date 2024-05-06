@@ -61,7 +61,7 @@ class EditCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .ypBG
         textField.becomeFirstResponder()
         addSubviews()
         setupLayout()

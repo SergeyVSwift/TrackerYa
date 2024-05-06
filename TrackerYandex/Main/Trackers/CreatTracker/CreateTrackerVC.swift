@@ -111,6 +111,7 @@ final class TrackersVC: UIViewController {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .ypBG
         collectionView.register(TrackersCollectionViewCell.self,
                                 forCellWithReuseIdentifier: TrackersCollectionViewCell.identifier)
         collectionView.register(TrackerSupView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrackerSupView.identifier)
@@ -122,7 +123,7 @@ final class TrackersVC: UIViewController {
         super.viewDidLoad()
         analyticsService.report(event: .open, params: ["Screen" : "Main"])
         print("Event: open")
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .ypBG
         setDayOfWeek()
         updateCategories(with: trackerCategoryStore.trackerCategories)
         completedTrackers = trackerRecordStore.trackerRecords

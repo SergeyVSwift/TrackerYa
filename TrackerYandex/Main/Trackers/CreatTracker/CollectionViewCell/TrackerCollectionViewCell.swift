@@ -157,4 +157,3 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         resultLabel.text = String.localizedStringWithFormat(NSLocalizedString("numberOfDay", comment: "Число дней"), completedCount)
     }
 }
-

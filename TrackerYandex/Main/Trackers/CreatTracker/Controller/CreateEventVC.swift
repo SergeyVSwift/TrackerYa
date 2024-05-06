@@ -310,7 +310,7 @@ class CreateEventVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .ypBG
         addSubviews()
         setupLayout()
         setupEditTracker()

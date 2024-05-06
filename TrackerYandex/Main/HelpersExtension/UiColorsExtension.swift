@@ -21,9 +21,8 @@ extension UIColor {
     static let gradientColor3 = UIColor(named: "gradientColor3") ?? UIColor.blue
     static let datePickerColor = UIColor(named: "datePickerColor") ?? UIColor.gray
     static let datePickerTintColor = UIColor(named: "datePickerTintColor") ?? UIColor.black
-    static let backgroundColor = UIColor(named: "YPBackground") ?? UIColor.red
+    static let backgroundColor = UIColor(named: "bgColor") ?? UIColor.red
     static let switchColor = UIColor(named: "switchColor") ?? UIColor.blue
-    static var bgColor: UIColor { UIColor(named: "YPBackground") ?? UIColor.red }
     static var searchColor: UIColor { UIColor(named: "SearchColor") ?? UIColor.gray }
     static var lightGray: UIColor { UIColor(named: "lightGray") ?? UIColor.gray }
     static var ypGray: UIColor { UIColor(named: "YPGray") ?? UIColor.gray }
@@ -64,4 +63,18 @@ extension UIColor {
         )
     }
 }
-
+extension UIColor {
+    static var ypBG: UIColor {
+        if let color = UIColor(named: "YP White") {
+            return color
+        } else {
+            return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1)
+                } else {
+                    return UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+                }
+            }
+        }
+    }
+}

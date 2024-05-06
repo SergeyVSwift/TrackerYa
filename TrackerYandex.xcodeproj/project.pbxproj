@@ -24,10 +24,10 @@
 		C537DE712BE96D1D0049A1C1 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C537DE702BE96D1D0049A1C1 /* SnapshotTesting */; };
 		C537DE812BE9860B0049A1C1 /* Pods_TrackerYandex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C537DE802BE9860B0049A1C1 /* Pods_TrackerYandex.framework */; };
 		C537DE872BE987C90049A1C1 /* TrackerYandexTests.swift in Resources */ = {isa = PBXBuildFile; fileRef = C5A609912BE96B7B00C195FA /* TrackerYandexTests.swift */; };
-		C537DE892BE988A80049A1C1 /* Pods_TrackerYandexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C537DE882BE988A80049A1C1 /* Pods_TrackerYandexTests.framework */; };
 		C5922E672BE90FD200ED0D9A /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = C5922E692BE90FD200ED0D9A /* Localizable.stringsdict */; };
 		C5922E6E2BE90FFE00ED0D9A /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5922E702BE90FFE00ED0D9A /* LocalizableString.strings */; };
 		C5A609922BE96B7B00C195FA /* TrackerYandexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A609912BE96B7B00C195FA /* TrackerYandexTests.swift */; };
+		C5A8123A2BE99F0A000D137B /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C5A812392BE99F0A000D137B /* InlineSnapshotTesting */; };
 		C5B2950D2ACC333E0038C642 /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5B2950B2ACC333E0038C642 /* Tracker.xcdatamodeld */; };
 		C5C289702BD9210F00FC875F /* TrackerCategoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C2896F2BD9210F00FC875F /* TrackerCategoryStore.swift */; };
 		C5C289722BD9212C00FC875F /* TrackerRecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C289712BD9212C00FC875F /* TrackerRecordStore.swift */; };
@@ -146,7 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C537DE892BE988A80049A1C1 /* Pods_TrackerYandexTests.framework in Frameworks */,
+				C5A8123A2BE99F0A000D137B /* InlineSnapshotTesting in Frameworks */,
 				C537DE712BE96D1D0049A1C1 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +453,7 @@
 			name = TrackerYandexTests;
 			packageProductDependencies = (
 				C537DE702BE96D1D0049A1C1 /* SnapshotTesting */,
+				C5A812392BE99F0A000D137B /* InlineSnapshotTesting */,
 			);
 			productName = TrackerYandexTests;
 			productReference = C581C19B2BE9227F008FA170 /* TrackerYandexTests.xctest */;
@@ -975,6 +976,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C519CCD52BE967C2000D19D1 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		C5A812392BE99F0A000D137B /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C519CCD52BE967C2000D19D1 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 
