@@ -24,9 +24,7 @@
 		C51F46FC2BEACB8E002CD158 /* TrackerYandexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51F46FB2BEACB8E002CD158 /* TrackerYandexTests.swift */; };
 		C51F47032BEACBBB002CD158 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C51F47022BEACBBB002CD158 /* SnapshotTesting */; };
 		C51F47042BEACBBC002CD158 /* Pods_TrackerYandexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C531C0B42BEAAE92001668A9 /* Pods_TrackerYandexTests.framework */; };
-		C51F47052BEACBBC002CD158 /* Pods_TrackerYandexTests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C531C0B42BEAAE92001668A9 /* Pods_TrackerYandexTests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C51F47072BEACBC3002CD158 /* Pods_TrackerYandex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C537DE802BE9860B0049A1C1 /* Pods_TrackerYandex.framework */; };
-		C51F47082BEACBC3002CD158 /* Pods_TrackerYandex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C537DE802BE9860B0049A1C1 /* Pods_TrackerYandex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C5922E672BE90FD200ED0D9A /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = C5922E692BE90FD200ED0D9A /* Localizable.stringsdict */; };
 		C5922E6E2BE90FFE00ED0D9A /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5922E702BE90FFE00ED0D9A /* LocalizableString.strings */; };
 		C5B2950D2ACC333E0038C642 /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5B2950B2ACC333E0038C642 /* Tracker.xcdatamodeld */; };
@@ -68,31 +66,6 @@
 			remoteInfo = TrackerYandex;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		C51F47062BEACBBC002CD158 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C51F47052BEACBBC002CD158 /* Pods_TrackerYandexTests.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C51F47092BEACBC4002CD158 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C51F47082BEACBC3002CD158 /* Pods_TrackerYandex.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		35020E26E93707ECAD5A5EC9 /* Pods-TrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TrackerTests/Pods-TrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -458,7 +431,6 @@
 				C512C8372AC04A8000B67195 /* Frameworks */,
 				C512C8382AC04A8000B67195 /* Resources */,
 				8A15EEA810D6068075C85A24 /* [CP] Embed Pods Frameworks */,
-				C51F47092BEACBC4002CD158 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -477,7 +449,6 @@
 				C51F46F52BEACB8E002CD158 /* Sources */,
 				C51F46F62BEACB8E002CD158 /* Frameworks */,
 				C51F46F72BEACB8E002CD158 /* Resources */,
-				C51F47062BEACBBC002CD158 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -917,7 +888,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = SergeyVSwift.TrackerYandexTests;
@@ -942,7 +913,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = SergeyVSwift.TrackerYandexTests;
