@@ -4,11 +4,9 @@
 //
 //  Created by Сергей Ващенко on 07.05.24.
 //
-
 import XCTest
 import SnapshotTesting
 @testable import TrackerYandex
-
 
 final class TrackerYandexTests: XCTestCase {
 
@@ -26,3 +24,4 @@ final class TrackerYandexTests: XCTestCase {
             as: .image(traits: .init(userInterfaceStyle: .dark)))
     }
 }
+
